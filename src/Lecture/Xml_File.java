@@ -1,6 +1,7 @@
 package Lecture;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Xml_File extends Xml_Reader {
@@ -26,12 +27,14 @@ public class Xml_File extends Xml_Reader {
 	}
 	
 	
-	public void read_metadonnees() throws Exception {
-		readXML(filePath, "metadonnees");
+	public HashMap<String, String> read_metadonnees() throws Exception {
+		HashMap<String, String> hasMetadata = new HashMap<String, String>();
+		return readXML(filePath, "metadonnees",hasMetadata);
 	}
 	
-	public void read_simulation() throws Exception {
-		readXML(filePath, "simulation");
+	public HashMap<String, String> read_simulation() throws Exception {
+		HashMap<String, String> hasMetadata = new HashMap<String, String>();
+		return readXML(filePath, "simulation", hasMetadata);
 	}
 	
 
