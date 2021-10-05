@@ -15,11 +15,16 @@ public class Composant {
 		this.position = position;
 		this.vitesse = vitesse ; 
 	}
+	
+	public Composant(String type) {
+		super();
+		this.type = type;
+	}
 
 
 	@Override
 	public String toString() {
-		return "Composant [type=" + type + "]";
+		return " Composant [type=" + type + "]";
 	} 
 	
 	

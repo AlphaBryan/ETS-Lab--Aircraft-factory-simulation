@@ -4,9 +4,10 @@ import composants.Composant;
 
 public class Usine_moteur extends Usine {
 
-	public Usine_moteur(int id, int x, int y, Composant enter_product_type, int max_capacity,
-			Composant output_product_type, int interval_production) {
-		super(id, x, y, enter_product_type, max_capacity, output_product_type, interval_production);
+	public Usine_moteur(String type) {
+		super(type);
+		// TODO Auto-generated constructor stub
 	}
+
 
 }

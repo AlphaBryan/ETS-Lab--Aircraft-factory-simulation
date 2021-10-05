@@ -1,9 +1,9 @@
-package Industrie;
+package industrie;
 
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
-import Lecture.Xml_File;
+import lecture.Xml_File;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -23,14 +23,14 @@ public class Main {
 
 public static void main(String[] args) throws Exception {
 	
-	String filePath = "./src/ressources/configuration.xml" ;
+	String filePath = "../src/ressources/configuration.xml" ;
 	
 	Xml_File myXML = new Xml_File(filePath) ;
-	/*
-	 * System.out.println("================= Go readMetaDAta"); HashMap<String,
-	 * String> hashMetaData = myXML.read_metadonnees();
-	 * System.out.println("================= OFF readMetaDAta");
-	 */
+	
+	  System.out.println("================= Go readMetaDAta"); HashMap<String,
+	  String> hashMetaData = myXML.read_metadonnees();
+	  System.out.println("================= OFF readMetaDAta");
+	 
 
 	System.out.println("XXXXXXXXXXXXXXXXXXXXXX");
 	
@@ -46,8 +46,7 @@ public static void main(String[] args) throws Exception {
 	 * System.out.println("================= OFF simulation");
 	 */
   
-
-
+	}
 
 
 
@@ -57,4 +56,3 @@ public static void main(String[] args) throws Exception {
 }
 
 
-}
