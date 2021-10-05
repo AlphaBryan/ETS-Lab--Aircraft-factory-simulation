@@ -1,6 +1,6 @@
 package resaux;
 
-public class chemin {
+public class Chemin {
 
 	public int point1 ; 
 	public int point2 ; 

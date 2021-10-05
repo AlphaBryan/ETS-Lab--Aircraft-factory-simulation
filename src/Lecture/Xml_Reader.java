@@ -17,6 +17,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+
+
 public class Xml_Reader {
 
 	public static HashMap<String, String> readXML(String filePath, String myPrincipaleNode,  HashMap<String, String> hashNode) throws Exception {

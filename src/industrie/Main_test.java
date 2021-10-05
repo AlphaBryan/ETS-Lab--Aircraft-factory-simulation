@@ -85,16 +85,14 @@ public static void main(String[] args) throws Exception {
         	new_usine.setInterval_production(interval_value);
         }
 
-        
         System.out.println("  **Object ==>"+ new_usine ) ;
-      
 
     }
 
     /*
     // Find and iterate over VALUE nodes
     XPathExpression valueQuery = xpath.compile("/REPORT/REPORT_DETAIL/RESOURCE/CHARGE/VALUE");
-    NodeList values = (NodeList) valueQuery.evaluate(doc, XPathConstants.NODESET);
+    NodeList values = (NodeList) valueQuery.evaluate(, XPathConstants.NODESET);
     String lastResourceName = null;
     for (int i = 0; i < values.getLength(); i++) {
         Element value = (Element) values.item(i);

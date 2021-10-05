@@ -4,6 +4,8 @@ import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import lecture.Xml_File;
+import resaux.Noeud;
+import usines.Usine;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -15,7 +17,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap; 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map; 
 
 public class Main {
 
@@ -27,8 +31,8 @@ public static void main(String[] args) throws Exception {
 	
 	Xml_File myXML = new Xml_File(filePath) ;
 	
-	  System.out.println("================= Go readMetaDAta"); HashMap<String,
-	  String> hashMetaData = myXML.read_metadonnees();
+	  System.out.println("================= Go readMetaDAta"); 
+	  ArrayList<Usine> list_usine = myXML.read_metadonnees();
 	  System.out.println("================= OFF readMetaDAta");
 	 
 
@@ -40,11 +44,12 @@ public static void main(String[] args) throws Exception {
 	 * " " + value); } System.out.println(hashMetaData);
 	 */
 
-	/*
-	 * System.out.println("================= Go simulation");
-	 * myXML.read_simulation();
-	 * System.out.println("================= OFF simulation");
-	 */
+	
+	  System.out.println("================= Go simulation for usine ");
+	  Map<Integer, Noeud> usine_map = myXML.read_simulation_usine(list_usine);
+	  System.out.println("result => : "+usine_map.get(21).getClass());
+	  System.out.println("================= OFF simulation for usine");
+	 
   
 	}
 

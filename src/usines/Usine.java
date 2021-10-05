@@ -13,24 +13,25 @@ public class Usine {
 
 	private int id ;
 	private String type ; 
-	private ArrayList<Integer> position ; 	
+	private int[] position ; 	
 	private ArrayList<String> icones  ; //check sur les autres ²
-	
 	protected HashMap<String, Integer> enter_product_type ; //hash importance, nom
 	private ArrayList<Composant> enter_products = new ArrayList<Composant>() ; 
 	private int max_capacity ;
 	private Composant output_product_type ; 
 	private int interval_production ; 
 
-	public Usine(ArrayList<Integer> position, HashMap<String, Integer> enter_product_type, int max_capacity, Composant output_product_type,
-			int interval_production) {
+	public Usine(Usine usine) {
 		super();
-		this.id = -1 ;
-		this.position = position;
-		this.enter_product_type = enter_product_type;
-		this.max_capacity = max_capacity;
-		this.output_product_type = output_product_type;
-		this.interval_production = interval_production;
+		this.id = usine.getId() ;
+		this.type = usine.getType() ; 
+		this.position = usine.getPosition();
+		this.icones = usine.getIcones() ;
+ 		this.enter_product_type = usine.getEnter_product_type();
+ 		this.enter_products = usine.getEnter_products() ;
+		this.max_capacity = usine.getMax_capacity();
+		this.output_product_type = usine.getOutput_product_type();
+		this.interval_production = usine.getInterval_production();
 	}
 	
 
@@ -38,7 +39,7 @@ public class Usine {
 		this.id = -1 ;
 		this.type = type ; 
 		this.icones = new ArrayList<String>() ; 
-		this.position = new ArrayList<Integer>() ; 
+		this.position = new int[2] ; 
 		this.enter_product_type = new HashMap<String, Integer>() ; 
 		this.output_product_type = null ;
 		this.interval_production =  0 ; 
@@ -56,7 +57,7 @@ public class Usine {
 
 	@Override
 	public String toString() {
-		return "Usine [id=" + id + ", type=" + type + ", position=" + position + ", icones:" + icones.size()
+		return "Usine [id=" + id + ", type=" + type + ", position= [" + position[0] +","+position[1] +"]"+ ", icones:" + icones.size()
 				+ ", enter_product_type=" + enter_product_type + ", enter_products=" + enter_products
 				+ ", max_capacity=" + max_capacity + ", output_product_type=" + output_product_type
 				+ ", interval_production=" + interval_production + "]";
@@ -71,11 +72,36 @@ public class Usine {
 		this.id = id;
 	}
 
-	public ArrayList<Integer> getPosition() {
+	public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
+	public ArrayList<String> getIcones() {
+		return icones;
+	}
+
+
+	public void setIcones(ArrayList<String> icones) {
+		this.icones = icones;
+	}
+
+
+	public void setOutput_product_type(Composant output_product_type) {
+		this.output_product_type = output_product_type;
+	}
+
+
+	public int[] getPosition() {
 		return position;
 	}
 
-	public void setPosition(ArrayList<Integer> position) {
+	public void setPosition(int[] position) {
 		this.position = position;
 	}
 
