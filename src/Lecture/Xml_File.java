@@ -91,7 +91,8 @@ public class Xml_File {
 	        for (int j = 0 ; j< iconesList.getLength(); j++) {
 	            Element icone = (Element) iconesList.item(j);
 	            //System.out.println("==>"+icone.getAttribute("path"));
-	            new_usine.addIcone(icone.getAttribute("path").toString() );
+	            String iPath = "../" + icone.getAttribute("path").toString() ; 
+	            new_usine.addIcone( iPath );
 	        }
 	        
 	        //GET INPUT 

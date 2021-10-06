@@ -96,16 +96,11 @@ public class Usine {
 	}
 
 
-	public ArrayList<String> getIcones() {
-		return icones;
-	}
-
-
 	public void setIcones(ArrayList<String> icones) {
 		this.icones = icones;
 	}
 	
-	public String getTheIcones(int i) {
+	public String getTheIcone(int i) {
 		return icones.get(i);
 	}
 
@@ -131,7 +126,7 @@ public class Usine {
 	}
 
 
-	public ArrayList<String> getIcone() {
+	public ArrayList<String> getIcones() {
 		return icones;
 	}
 

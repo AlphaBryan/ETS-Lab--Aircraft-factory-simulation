@@ -61,9 +61,11 @@ public class MenuFenetre extends JMenuBar {
 				Xml_File myXML;
 				try {
 					myXML = new Xml_File(filePath);
-					ArrayList<Usine> list_usine = myXML.read_metadonnees();
-				    Map<Integer, Noeud> usine_map = myXML.read_simulation_usine(list_usine);
-				    ArrayList<Chemin> chemins = myXML.read_simulation_chemin(usine_map);
+					ArrayList<Usine> all_usine = myXML.read_metadonnees();
+					Simulation.Usines = myXML.read_simulation_usine(all_usine);
+				    Simulation.Chemins = myXML.read_simulation_chemin(Simulation.Usines);
+					firePropertyChange("Node", null, "Ceci n'est pas un test");
+
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
