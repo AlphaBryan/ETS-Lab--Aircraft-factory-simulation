@@ -4,6 +4,7 @@ import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import lecture.Xml_File;
+import resaux.Chemin;
 import resaux.Noeud;
 import usines.Usine;
 
@@ -29,10 +30,12 @@ public static void main(String[] args) throws Exception {
 	
 	String filePath = "../src/ressources/configuration.xml" ;
 	
-	Xml_File myXML = new Xml_File(filePath) ;
+	
+	  Xml_File myXML = new Xml_File(filePath) ;
 	
 	  System.out.println("================= Go readMetaDAta"); 
 	  ArrayList<Usine> list_usine = myXML.read_metadonnees();
+	  System.out.println("result liste usine => : "+list_usine);
 	  System.out.println("================= OFF readMetaDAta");
 	 
 
@@ -47,8 +50,15 @@ public static void main(String[] args) throws Exception {
 	
 	  System.out.println("================= Go simulation for usine ");
 	  Map<Integer, Noeud> usine_map = myXML.read_simulation_usine(list_usine);
-	  System.out.println("result => : "+usine_map.get(21).getClass());
+	  System.out.println("result usines_simu => : "+usine_map);
 	  System.out.println("================= OFF simulation for usine");
+	  
+	  System.out.println("XXXXXXXXXXXXXXXXXXXXXX");
+
+	  System.out.println("================= Go simulation for Chemin ");
+	  ArrayList<Chemin> chemins = myXML.read_simulation_chemin(usine_map);
+	  System.out.println("result chemins => : "+chemins);
+	  System.out.println("================= OFF simulation for Chemin");
 	 
   
 	}

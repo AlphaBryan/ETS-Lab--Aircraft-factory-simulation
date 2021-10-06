@@ -2,6 +2,8 @@ package simulation;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
@@ -10,6 +12,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
+
+import lecture.Xml_File;
+import resaux.Chemin;
+import resaux.Noeud;
+import usines.Usine;
 
 public class MenuFenetre extends JMenuBar {
 
@@ -47,9 +54,20 @@ public class MenuFenetre extends JMenuBar {
 			int returnValue = fileChooser.showOpenDialog(null);
 
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
-				// TODO - Parser le fichier XML sélectionné
 				File selectedFile = fileChooser.getSelectedFile();
-				System.out.println(selectedFile.getAbsolutePath());
+				System.out.println("=>"+selectedFile.getAbsolutePath());
+				// Done - Parser le fichier XML sélectionné
+				String filePath = selectedFile.getAbsolutePath() ;
+				Xml_File myXML;
+				try {
+					myXML = new Xml_File(filePath);
+					ArrayList<Usine> list_usine = myXML.read_metadonnees();
+				    Map<Integer, Noeud> usine_map = myXML.read_simulation_usine(list_usine);
+				    ArrayList<Chemin> chemins = myXML.read_simulation_chemin(usine_map);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
 			}
 		});
 		

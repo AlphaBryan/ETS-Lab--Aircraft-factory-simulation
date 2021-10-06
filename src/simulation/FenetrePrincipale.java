@@ -4,8 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
+
+import resaux.Noeud;
 
 public class FenetrePrincipale extends JFrame implements PropertyChangeListener {
 
@@ -14,7 +17,11 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 	private static final Dimension DIMENSION = new Dimension(700, 700);
 
 	public FenetrePrincipale() {
-		PanneauPrincipal panneauPrincipal = new PanneauPrincipal();
+		int[] pos_test = {320,352} ; 
+		ArrayList<String> icones_test = new ArrayList<String>() ; 
+		icones_test.add("C:\\School-stuff-ETS\\JAVAWORKSPACE-ETS\\lab1-squelette\\src\\ressources\\moteur.png");
+		Noeud node_test = new Noeud("x",pos_test,icones_test); 
+		PanneauPrincipal panneauPrincipal = new PanneauPrincipal(node_test);
 		MenuFenetre menuFenetre = new MenuFenetre();
 		add(panneauPrincipal);
 		add(menuFenetre, BorderLayout.NORTH);

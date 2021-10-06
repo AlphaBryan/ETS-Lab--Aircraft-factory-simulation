@@ -43,12 +43,18 @@ public class Usine {
 		this.enter_product_type = new HashMap<String, Integer>() ; 
 		this.output_product_type = null ;
 		this.interval_production =  0 ; 
-		
-		
-
 	}
 	
 
+	public Usine(String type , int[] position,ArrayList<String> icones) {
+		this.id = -1 ;
+		this.type = type ; 
+		this.icones = icones ; 
+		this.position = position; 
+		this.enter_product_type = new HashMap<String, Integer>() ; 
+		this.output_product_type = null ;
+		this.interval_production =  0 ; 
+	}
 	/*
 	 * @Override public String toString() { return "Usine [id=" + id +
 	 * ", enter_product_type=" + enter_product_type + ", output_product_type=" +
@@ -67,6 +73,14 @@ public class Usine {
 	public int getId() {
 		return id;
 	}
+	
+	public int getVitesseX() {
+		return 0;
+	}
+	public int getVitesseY() {
+		return 0;
+	}
+	
 
 	public void setId(int id) {
 		this.id = id;
@@ -90,6 +104,10 @@ public class Usine {
 	public void setIcones(ArrayList<String> icones) {
 		this.icones = icones;
 	}
+	
+	public String getTheIcones(int i) {
+		return icones.get(i);
+	}
 
 
 	public void setOutput_product_type(Composant output_product_type) {
@@ -100,7 +118,14 @@ public class Usine {
 	public int[] getPosition() {
 		return position;
 	}
-
+	
+	public int getX() {
+		return position[0];
+	}
+	
+	public int getY() {
+		return position[1];
+	}
 	public void setPosition(int[] position) {
 		this.position = position;
 	}
