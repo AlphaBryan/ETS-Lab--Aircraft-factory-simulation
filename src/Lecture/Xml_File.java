@@ -1,4 +1,4 @@
-package lecture;
+package Lecture;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ import usines.Usine_moteur;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
-import lecture.Xml_File;
+import Lecture.Xml_File;
 import resaux.Chemin;
 import resaux.Noeud;
 import usines.Usine;
@@ -91,7 +91,7 @@ public class Xml_File {
 	        for (int j = 0 ; j< iconesList.getLength(); j++) {
 	            Element icone = (Element) iconesList.item(j);
 	            //System.out.println("==>"+icone.getAttribute("path"));
-	            String iPath = "../" + icone.getAttribute("path").toString() ; 
+	            String iPath = icone.getAttribute("path").toString() ; 
 	            new_usine.addIcone( iPath );
 	        }
 	        

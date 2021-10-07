@@ -41,8 +41,11 @@ public class Noeud extends Usine {
 	}
 	
 	public void init_Image() {
-		String rel_Path = ' ' + this.getTheIcone(0).replaceAll("../src/", "") ;
+		//String rel_Path = ' ' + this.getTheIcone(0).replaceAll("../src/", "") ;
+		String rel_Path = ' ' + this.getTheIcone(0);
 		String abs_Path = new File(rel_Path).getAbsolutePath().replaceAll(" ", "");
+		System.out.println("==rel:"+rel_Path);
+		System.out.println("==rel:"+abs_Path);
 		this.image = Toolkit.getDefaultToolkit().createImage(abs_Path);
 	}
     

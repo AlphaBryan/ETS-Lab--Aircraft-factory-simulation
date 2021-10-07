@@ -1,9 +1,9 @@
-package industrie;
+package Industrie;
 
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
-import lecture.Xml_File;
+import Lecture.Xml_File;
 import resaux.Chemin;
 import resaux.Noeud;
 import usines.Usine;
@@ -28,7 +28,7 @@ public class Main {
 
 public static void main(String[] args) throws Exception {
 	
-	String filePath = "../src/ressources/configuration.xml" ;
+	String filePath = "./src/ressources/configuration.xml" ;
 	
 	
 	  Xml_File myXML = new Xml_File(filePath) ;

@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-import lecture.Xml_File;
+import Lecture.Xml_File;
 import resaux.Chemin;
 import resaux.Noeud;
 import usines.Usine;

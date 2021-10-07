@@ -1,9 +1,9 @@
-package industrie;
+package Industrie;
 
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
-import lecture.Xml_File;
+import Lecture.Xml_File;
 import usines.Usine;
 
 import javax.xml.XMLConstants;
