@@ -22,15 +22,19 @@ public class PanneauPrincipal extends JPanel {
 	
 
 	// Variables temporaires de la demonstration:
-//	private Point position = new Point(1,1);
-//	private Point vitesse = new Point(1,1);
-//	private int taille = 32;
+	private Point position = new Point(1,1);
+	private Point vitesse = new Point(1,1);
+	private int taille = 32;
+	Point pos = new Point(32,32) ; 
+	String abs_Path = "C:\\School-stuff-ETS\\JAVAWORKSPACE-ETS\\lab1-squelette\\src\\ressources\\metal.png" ; 
+	Image image_test = Toolkit.getDefaultToolkit().createImage(abs_Path);
 
+	
     
 	public PanneauPrincipal(Noeud node) {
 		super();
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -38,6 +42,7 @@ public class PanneauPrincipal extends JPanel {
 		//position.translate(vitesse.x, vitesse.y);
 		//g.fillRect(position.x, position.y, taille, taille);
 		//g.drawLine(0, 0, 300, 300);
+		
 
     	paint_paths(g);
     	paint_nodes(g);
@@ -59,9 +64,22 @@ public class PanneauPrincipal extends JPanel {
 				Noeud to = Simulation.Usines.get(chemin.exit) ; 
 				g.drawLine(from.getX()+16, from.getY()+16, to.getX()+16, to.getY()+16);
 			}
+	    	paint_composant(g,pos);
+
 		}
+		
 	}
-	
+	public void paint_composant(Graphics g, Point pos) {
+		Point start = new Point(32,32);
+		Point end = new Point(320,32);
+		Point vit = new Point(5,0);
+		pos.translate(vit.x, vit.y);
+		if(pos.x<end.x) {
+			//g.fillRect(pos.x+25, pos.y+11, 10, 10);
+	        g.drawImage(image_test, pos.x, pos.y, null);
+		}
+		else {pos.x=32;}
+	}
 
 	
 
