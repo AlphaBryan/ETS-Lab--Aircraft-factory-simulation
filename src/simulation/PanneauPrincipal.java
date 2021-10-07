@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import resaux.Chemin;
 import resaux.Noeud;
+import composants.Composant ;
 
 public class PanneauPrincipal extends JPanel {
 
@@ -26,12 +27,13 @@ public class PanneauPrincipal extends JPanel {
 	private Point vitesse = new Point(1,1);
 	private int taille = 32;
 	Point pos = new Point(32,32) ; 
-	String abs_Path = "C:\\School-stuff-ETS\\JAVAWORKSPACE-ETS\\lab1-squelette\\src\\ressources\\metal.png" ; 
+	//String abs_Path = "C:\\School-stuff-ETS\\JAVAWORKSPACE-ETS\\lab1-squelette\\src\\ressources\\metal.png" ; 
+	String abs_Path = "H:\\Log121\\lab01\\lab1-squelette\\src\\ressources\\metal.png" ; 
 	Image image_test = Toolkit.getDefaultToolkit().createImage(abs_Path);
 
 	
     
-	public PanneauPrincipal(Noeud node) {
+	public PanneauPrincipal() {
 		super();
 	}
 
@@ -42,8 +44,6 @@ public class PanneauPrincipal extends JPanel {
 		//position.translate(vitesse.x, vitesse.y);
 		//g.fillRect(position.x, position.y, taille, taille);
 		//g.drawLine(0, 0, 300, 300);
-		
-
     	paint_paths(g);
     	paint_nodes(g);
 
@@ -64,12 +64,13 @@ public class PanneauPrincipal extends JPanel {
 				Noeud to = Simulation.Usines.get(chemin.exit) ; 
 				g.drawLine(from.getX()+16, from.getY()+16, to.getX()+16, to.getY()+16);
 			}
-	    	paint_composant(g,pos);
+	    	//paint_composant_test(g,pos);
+	    	paint_composant(g,11,21);
 
 		}
 		
 	}
-	public void paint_composant(Graphics g, Point pos) {
+	public void paint_composant_test(Graphics g, Point pos) {
 		Point start = new Point(32,32);
 		Point end = new Point(320,32);
 		Point vit = new Point(5,0);
@@ -79,6 +80,25 @@ public class PanneauPrincipal extends JPanel {
 	        g.drawImage(image_test, pos.x, pos.y, null);
 		}
 		else {pos.x=32;}
+	}
+	
+	public void paint_composant(Graphics g, int enter, int exit) {
+		Noeud start = Simulation.Usines.get(enter) ;
+		Noeud end = Simulation.Usines.get(exit) ; 
+		Chemin chemin ;
+		for(Chemin iChemin : Simulation.Chemins) {
+			if (iChemin.checkNodes(enter, exit)) {
+				chemin = iChemin ;
+			}
+		}
+		Composant element = start.build_product() ;
+		Point vit = new Point(5,0);
+		element.move();
+		if(element.getX()<end.getX()-element.getImageWidth()) {
+	        g.drawImage(element.getIcone(), element.getX()+element.getImageWidth(), element.getY()+element.getImageHeight()-2, null);
+	      
+		}
+		else {element.position.x=32-30;}
 	}
 
 	

@@ -52,9 +52,15 @@ public class Chemin {
 		
 		double somme = x2 + y2 ;
 		double distance = Math.sqrt(somme) ; 
-		
 		this.longueur = distance ; 
 		
+	}
+	
+	public boolean checkNodes(int id_enter, int id_exit) {
+		if(id_enter == this.enter && id_exit == this.exit) {
+			return true ;
+		}
+		return false ;
 	}
 	
 	

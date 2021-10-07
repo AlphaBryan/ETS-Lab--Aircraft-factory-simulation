@@ -18,20 +18,9 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 	private static final Dimension DIMENSION = new Dimension(700, 700);
 
 	public FenetrePrincipale() {
-		int[] pos_test = {320,352} ; 
-		int[] pos_test2 = {0,0} ;
-		ArrayList<String> icones_test = new ArrayList<String>() ; 
-		icones_test.add("C:\\School-stuff-ETS\\JAVAWORKSPACE-ETS\\lab1-squelette\\src\\ressources\\moteur.png");
-		Noeud node_test = new Noeud("x",pos_test,icones_test); 
-		Noeud node_test2 = new Noeud("x",pos_test2,icones_test); 
-
-		
-		PanneauPrincipal panneauPrincipal = new PanneauPrincipal(node_test);
+				
+		PanneauPrincipal panneauPrincipal = new PanneauPrincipal();
 		this.add(panneauPrincipal);
-		
-		PanneauPrincipal panneauPrincipal2 = new PanneauPrincipal(node_test2);
-		this.add(panneauPrincipal2);
-
 
 		MenuFenetre menuFenetre = new MenuFenetre();
 		add(menuFenetre, BorderLayout.NORTH);
