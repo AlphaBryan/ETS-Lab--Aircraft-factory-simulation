@@ -115,7 +115,7 @@ public class Xml_File {
 			Element output = (Element) usine.getElementsByTagName("sortie").item(0);
 			if (output != null) {
 				String output_type = output.getAttribute("type");
-				new_usine.setOutput_product(output_type);
+				new_usine.setOutput_product_type(output_type);
 			}
 
 			// GET INTERVAL PROD

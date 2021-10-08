@@ -61,6 +61,7 @@ public class MenuFenetre extends JMenuBar {
 				Xml_File myXML;
 				try {
 					myXML = new Xml_File(filePath);
+				    System.out.println("Ficher chargé ! ");
 					ArrayList<Usine> all_usine = myXML.read_metadonnees();
 					Simulation.Usines = myXML.read_simulation_usine(all_usine);
 				    Simulation.Chemins = myXML.read_simulation_chemin(Simulation.Usines);
@@ -69,6 +70,9 @@ public class MenuFenetre extends JMenuBar {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+			    Simulation.run();
+			    System.out.println("Simulation Launched ! ");
+
 
 			}
 		});

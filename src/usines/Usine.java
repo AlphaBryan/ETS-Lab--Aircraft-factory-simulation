@@ -20,7 +20,7 @@ public class Usine {
 	protected HashMap<String, Integer> enter_product_type ; //hash importance, nom
 	private ArrayList<Composant> enter_products = new ArrayList<Composant>() ; 
 	private int max_capacity ;
-	private Composant output_product ; 
+	private String output_product_type ; 
 	private int interval_production ; 
 
 	public Usine(Usine usine) {
@@ -32,7 +32,7 @@ public class Usine {
  		this.enter_product_type = usine.getEnter_product_type();
  		this.enter_products = usine.getEnter_products() ;
 		this.max_capacity = usine.getMax_capacity();
-		this.output_product = usine.getOutput_product();
+		this.output_product_type = usine.getOutput_product_type();
 		this.interval_production = usine.getInterval_production();
 	}
 	
@@ -43,7 +43,7 @@ public class Usine {
 		this.icones = new ArrayList<String>() ; 
 		this.position = new int[2] ; 
 		this.enter_product_type = new HashMap<String, Integer>() ; 
-		this.output_product = null ;
+		this.output_product_type = null ;
 		this.interval_production =  0 ; 
 	}
 	
@@ -54,7 +54,7 @@ public class Usine {
 		this.icones = icones ; 
 		this.position = position; 
 		this.enter_product_type = new HashMap<String, Integer>() ; 
-		this.output_product = null ;
+		this.output_product_type = null ;
 		this.interval_production =  0 ; 
 	}
 	/*
@@ -67,7 +67,7 @@ public class Usine {
 	public String toString() {
 		return "Usine [id=" + id + ", type=" + type + ", position= [" + position[0] +","+position[1] +"]"+ ", icones:" + icones.size()
 				+ ", enter_product_type=" + enter_product_type + ", enter_products=" + enter_products
-				+ ", max_capacity=" + max_capacity + ", output_product=" + output_product
+				+ ", max_capacity=" + max_capacity + ", output_product=" + output_product_type
 				+ ", interval_production=" + interval_production + "]";
 	}
 
@@ -165,14 +165,6 @@ public class Usine {
 
 
 
-	public void setOutput_product(String output) {
-		if(output.equals("metal") ) { this.output_product = new Composant_metal(output);}
-		else if(output.equals("aile") ) { this.output_product = new Composant_aile(output);}
-		else if(output.equals("moteur") ) { this.output_product = new Composant_moteur(output);}
-		else if(output.equals("avion") ) { this.output_product = new Composant_avion(output);}
-		Point pos = new Point(position[0], position[1]) ;
-		this.output_product.setPosition( pos );
-	}
 
 	public int getInterval_production() {
 		return interval_production;
@@ -182,12 +174,22 @@ public class Usine {
 		this.interval_production = interval_production;
 	}
 	
-	public Composant getOutput_product() {
-		return output_product;
+	public String getOutput_product_type() {
+		return output_product_type;
 	}
 	
-	public Composant build_product() {
-		return output_product;
+	public Composant build_product() {		
+		if(output_product_type.equals("metal") ) { return new Composant_metal(output_product_type);}
+		else if(output_product_type.equals("aile") ) { return new Composant_aile(output_product_type);}
+		else if(output_product_type.equals("moteur") ) { return  new Composant_moteur(output_product_type);}
+		else if(output_product_type.equals("avion") ) { return  new Composant_avion(output_product_type);}
+		
+		return null;
+			}
+
+
+	public void setOutput_product_type(String output_type) {
+		this.output_product_type = output_type ; 
 	}
 	
 

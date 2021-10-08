@@ -26,8 +26,9 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 
-		String filePath = "src/ressources/configuration.xml";
-		//String abs_Path = new File(filePath).getAbsolutePath();
+		//String filePath = "src/ressources/configuration.xml"; //Machine ecole 
+		String filePath = "ressources/configuration.xml"; //Ma machine ecole 
+		
 		Xml_File myXML = new Xml_File(filePath);
 
 		System.out.println("================= Go readMetaDAta");

@@ -1,10 +1,13 @@
 package simulation;
 
+import java.util.Queue;
+
 import javax.swing.SwingWorker;
+
+import composants.Composant;
 
 public class Environnement extends SwingWorker<Object, String> {
 	private boolean actif = true;
-	private boolean draw_node = false;
 	private static final int DELAI = 100;
 	private static int tour = 0;
 	
@@ -12,17 +15,23 @@ public class Environnement extends SwingWorker<Object, String> {
 	protected Object doInBackground() throws Exception {
 		while(actif) {
 			Thread.sleep(DELAI);
-			tour++;
-			
-			if(tour%100==0)System.out.println("==+ Product matiere");
-			/**
-			 * C'est ici que vous aurez à faire la gestion de la notion de tour.
-			 */
-			firePropertyChange("TEST", null, "tour: "+tour);
-			if(Simulation.Usines != null && draw_node==false) {
-				firePropertyChange("Node", null, "Ceci n'est pas un test");
-				draw_node = true ;
-			}
+			if(Simulation.isRunning()) {
+				tour++;
+				System.out.println("==> the queue : "+Simulation.production_queue);
+				if(tour%20==0) {
+					System.out.println("*********Product matiere");
+					int start = 11 ; 
+					Simulation.usine_build(start);
+				}
+				/*
+				 * for(Composant element: Simulation.production_queue) { element.move(); }
+				 */
+				
+
+				
+				
+				firePropertyChange("TEST", null, "tour: "+tour);			
+			}			
 		}
 		return null;
 	}

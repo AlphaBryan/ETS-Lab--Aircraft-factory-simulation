@@ -10,7 +10,7 @@ public class Composant {
 	private String type ; 
 	//private String icone ; 
     private Image icone ;
-	public Point position ;
+	private Point position ;
 	private Point vitesse ; 
 	
 	
@@ -50,6 +50,9 @@ public class Composant {
 	public void init_Icone() {
 		String rel_Path = "src/ressources/"+type+".png";
 		String abs_Path = new File(rel_Path).getAbsolutePath();
+		if(abs_Path.contains( "\\src\\src\\")) {
+			abs_Path = abs_Path.replaceAll("\\\\src\\\\src\\\\", "\\\\src\\\\");
+		}
 		this.icone= Toolkit.getDefaultToolkit().createImage(abs_Path);
 	}
 
@@ -100,7 +103,9 @@ public class Composant {
 	}
 	
 	public void move() {
-		position.translate(vitesse.x, vitesse.y);
+		//System.out.print("translation =>:" + position.x + "to ");
+		this.position.translate(vitesse.x, vitesse.y);
+		//System.out.println(position.x);
 	}
 	
 	

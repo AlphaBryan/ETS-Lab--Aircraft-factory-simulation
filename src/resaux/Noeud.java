@@ -22,11 +22,9 @@ public class Noeud extends Usine {
 	public Noeud(Usine usine) {
 		super(usine);
 		init_Image();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Noeud(String type, int[] position, ArrayList<String> icones) {
-		// TODO Auto-generated constructor stub
 		super(type, position, icones);
 		init_Image();
 	}
@@ -44,6 +42,9 @@ public class Noeud extends Usine {
 		//String rel_Path = ' ' + this.getTheIcone(0).replaceAll("../src/", "") ;
 		String rel_Path = ' ' + this.getTheIcone(0);
 		String abs_Path = new File(rel_Path).getAbsolutePath().replaceAll(" ", "");
+		if(abs_Path.contains( "\\src\\src\\")) {
+			abs_Path = abs_Path.replaceAll("\\\\src\\\\src\\\\", "\\\\src\\\\");
+		}
 		//System.out.println("==rel: "+rel_Path);
 		//System.out.println("==abs: "+abs_Path);
 		this.image = Toolkit.getDefaultToolkit().createImage(abs_Path);
