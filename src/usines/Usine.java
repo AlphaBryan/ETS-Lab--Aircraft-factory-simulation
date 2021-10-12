@@ -83,7 +83,6 @@ public class Usine {
 		return 0;
 	}
 	
-
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -117,10 +116,10 @@ public class Usine {
 	public int getY() {
 		return position[1];
 	}
+	
 	public void setPosition(int[] position) {
 		this.position = position;
 	}
-
 
 	public ArrayList<String> getIcones() {
 		return icones;
@@ -134,7 +133,6 @@ public class Usine {
 		this.icones.add(icone);
 	}
 	 
-
 	public HashMap<String, Integer> getEnter_product_type() {
 		return enter_product_type;
 	}
@@ -163,9 +161,6 @@ public class Usine {
 		this.max_capacity = max_capacity;
 	}
 
-
-
-
 	public int getInterval_production() {
 		return interval_production;
 	}
@@ -193,7 +188,9 @@ public class Usine {
 	}
 	
 
-	
+	public boolean accept(String test_product_type) {
+		return enter_product_type.containsKey(test_product_type);
+	}
 	
 }
 

@@ -2,6 +2,7 @@ package simulation;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -19,10 +20,15 @@ public class Simulation {
 	 */
 	public static Map<Integer, Noeud> Usines ; 
 	public static ArrayList<Chemin> Chemins ;
-	//private static ArrayList<Integer> production_queue = new ArrayList<Integer>() ; 
+	
+	// # Map<id Origin, Map< nameType, id Fin >> Du point de vue l'élément
+	private static Map<Integer, Map<String, Integer>> simulationMap = new HashMap<Integer, Map<String, Integer>>(); 
+
 	public static ArrayList<Composant> production_queue = new ArrayList<Composant>() ; 
 
-	private static boolean running = false ; 
+	private static boolean running = false ;
+	private static boolean production_isOn = false;
+
 	
 	public static void main(String[] args) {
 		Environnement environnement = new Environnement();
@@ -33,14 +39,24 @@ public class Simulation {
 	}
 	
 	public static void run() {
+		updatePaths();
 		running = true ; 
-		System.out.println("--> Launch Simulation !");
+		production_isOn = true ; 
+		System.out.println("***Launch Simulation !");
 	}
 	
 	public static void stop() {
 		running = false ; 
 	}
 	
+	public static boolean production_isOn() {
+		return production_isOn;
+	}
+
+	public static void setProduction_isOn(boolean production_isOn) {
+		Simulation.production_isOn = production_isOn;
+	}
+
 	public static boolean isRunning() {
 		return running ; 
 	}
@@ -63,7 +79,7 @@ public class Simulation {
 	
 	public static void usine_build(int enter) {
 		Noeud start = Usines.get(enter) ;
-		int exit = 21;
+		System.out.println("creation from: "+start.getType());
 //		Noeud end = Usines.get(exit) ; 
 //		Chemin chemin ;
 //		for(Chemin iChemin : Simulation.Chemins) {
@@ -74,12 +90,38 @@ public class Simulation {
 		Composant element = start.build_product() ;
 		//Composant element = new Composant_metal("metal") ;
 		element.setPosition(new Point(start.getX(),start.getY()));
+		
+		int idEnd = simulationMap.get(start.getId()).get(element.getType());
+		Noeud end = Usines.get(idEnd);
+		element.setFullStop(end);
+		element.updateSpeed();
+
 		addQueue(element);
 
 	}
 	
-	//TODO METHODE MAGIQUE OU ON DONNE L'ID START et il trouve le chemin 
-	//Hash id_end / nom type 
+	public static void refreshQueue() {
+		for(int i = 0 ; i<production_queue.size() ; i++) {
+			if(production_queue.get(i).iskill()) {
+				production_queue.remove(i);
+				System.out.println("We kill someone");
+			}	
+		}
+	}
+	
+	public static void updatePaths() {
+		for (Chemin path : Chemins) {
+			Noeud output = Usines.get(path.getOrigin());
+			Noeud input = Usines.get(path.getEnd());
+			String typeProduct = output.getOutput_product_type() ; 
+			if( input.accept( typeProduct ) ) {
+				path.setType_composant( typeProduct );
+				Map<String, Integer> iproduct_iEnd = new HashMap<String, Integer>();
+				iproduct_iEnd.put(typeProduct, input.getId());
+				simulationMap.put(output.getId()  , iproduct_iEnd ); 
+			}
+		}
+	}
 
 	
 }

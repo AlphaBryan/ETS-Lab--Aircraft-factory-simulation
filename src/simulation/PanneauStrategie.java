@@ -24,8 +24,9 @@ public class PanneauStrategie extends JPanel {
 		JButton boutonConfirmer = new JButton("Confirmer");
 
 		boutonConfirmer.addActionListener((ActionEvent e) -> {
-			// TODO - Appeler la bonne stratégie
-			System.out.println(getSelectedButtonText(groupeBoutons));
+			// TODO - Appeler la bonne stratégie ***********************
+			System.out.println("***"+getSelectedButtonText(groupeBoutons)+" sélectionée.");
+		    Simulation.run();
 			// Fermer la fenêtre du composant
 			SwingUtilities.getWindowAncestor((Component) e.getSource()).dispose();
 		});

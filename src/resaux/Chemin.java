@@ -5,34 +5,35 @@ import java.util.Map;
 
 public class Chemin {
 
-	public int enter ; 
-	public int exit ; 
+	private int origin ; 
+	private int end ; 
+	private String type_composant ;
 	public double longueur ;
 	
 	
 	
-	public Chemin(int enter, int exit) {
+	public Chemin(int origin, int end) {
 		super();
-		this.enter = enter;
-		this.exit = exit;
+		this.origin = origin;
+		this.end = end;
 	}
 	
 	@Override
 	public String toString() {
-		return "Chemin [enter=" + enter + ", exit=" + exit + ", longueur=" + longueur + "]";
+		return "Chemin [origin=" + origin + ", end=" + end + ", composant=" + type_composant + "]";
 	}
 
-	public int getEnter() {
-		return enter;
+	public int getOrigin() {
+		return origin;
 	}
-	public void setEnter(int enter) {
-		this.enter = enter;
+	public void setOrigin(int origin) {
+		this.origin = origin;
 	}
-	public int getExit() {
-		return exit;
+	public int getEnd() {
+		return end;
 	}
-	public void setExit(int output) {
-		this.exit = output;
+	public void setEnd(int output) {
+		this.end = output;
 	}
 	public double getLongeur() {
 		return longueur;
@@ -42,8 +43,8 @@ public class Chemin {
 	} 
 	
 	public void calcul_Longueur(Map<Integer, Noeud> usine_map) {
-		int[] enter_node = usine_map.get(enter).getPosition() ; 
-		int[] exit_node = usine_map.get(exit).getPosition()  ; 
+		int[] enter_node = usine_map.get(origin).getPosition() ; 
+		int[] exit_node = usine_map.get(end).getPosition()  ; 
 		
 		double x = exit_node[0] - enter_node[0] ;
 		double x2 = Math.pow(x, 2) ;	
@@ -57,10 +58,27 @@ public class Chemin {
 	}
 	
 	public boolean checkNodes(int id_enter, int id_exit) {
-		if(id_enter == this.enter && id_exit == this.exit) {
+		if(id_enter == this.origin && id_exit == this.end) {
 			return true ;
 		}
 		return false ;
+	}
+
+	public String getType_composant() {
+		return type_composant;
+	}
+
+	public void setType_composant(String type_composant) {
+		this.type_composant = type_composant;
+	}
+	
+	public boolean carry_from(String carry , int from ) {
+		if (carry==type_composant) {
+			if(from == origin) {
+				return true ; 
+			}
+		}
+		return false ; 
 	}
 	
 	
