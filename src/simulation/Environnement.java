@@ -20,17 +20,19 @@ public class Environnement extends SwingWorker<Object, String> {
 				Simulation.refreshQueue(); 
 				if (Simulation.production_isOn()) {
 					
+					Simulation.checkProductionState(tour);
+					
 					if(tour%20==0) {
 						System.out.println("*********Product matiere");
-						int start = 11 ; 
 						//Simulation.usine_build(start);
-						Simulation.usine_build(11);
-						Simulation.usine_build(12);
-						Simulation.usine_build(13);
-						Simulation.usine_build(31);
-						Simulation.usine_build(21);
-						Simulation.usine_build(41);
+						//Simulation.usine_build(11);
+						//Simulation.usine_build(12);
+						//Simulation.usine_build(13);
+						//Simulation.usine_build(31);
+						//Simulation.usine_build(21);
+						//Simulation.usine_build(41);
 
+						// check interval s'il à pas de composant il fait rien 
 					}
 					
 				}

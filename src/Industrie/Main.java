@@ -27,7 +27,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 		//String filePath = "src/ressources/configuration.xml"; //Machine ecole 
-		String filePath = "ressources/configuration.xml"; //Ma machine ecole 
+		String filePath = "src/ressources/configuration.xml"; //Ma machine  
 		
 		Xml_File myXML = new Xml_File(filePath);
 

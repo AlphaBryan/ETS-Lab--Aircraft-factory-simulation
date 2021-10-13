@@ -19,9 +19,13 @@ public class Usine {
 	private ArrayList<String> icones  ; //check sur les autres ²
 	protected HashMap<String, Integer> enter_product_type ; //hash importance, nom
 	private ArrayList<Composant> enter_products = new ArrayList<Composant>() ; 
-	private int max_capacity ;
+	protected int capacity = 0 ;
+	protected double stock = 0 ;
+	protected int out_stock = 0 ; //1 ; 2 ; 3  
 	private String output_product_type ; 
-	private int interval_production ; 
+	private int interval_production ;
+	
+	protected boolean inProduction = false ;
 
 	public Usine(Usine usine) {
 		super();
@@ -31,12 +35,13 @@ public class Usine {
 		this.icones = usine.getIcones() ;
  		this.enter_product_type = usine.getEnter_product_type();
  		this.enter_products = usine.getEnter_products() ;
-		this.max_capacity = usine.getMax_capacity();
+		this.capacity = usine.getCapacity();
 		this.output_product_type = usine.getOutput_product_type();
 		this.interval_production = usine.getInterval_production();
+		calculate_factor();
 	}
 	
-
+	
 	public Usine(String type) {
 		this.id = -1 ;
 		this.type = type ; 
@@ -45,6 +50,7 @@ public class Usine {
 		this.enter_product_type = new HashMap<String, Integer>() ; 
 		this.output_product_type = null ;
 		this.interval_production =  0 ; 
+		calculate_factor();
 	}
 	
 
@@ -56,6 +62,7 @@ public class Usine {
 		this.enter_product_type = new HashMap<String, Integer>() ; 
 		this.output_product_type = null ;
 		this.interval_production =  0 ; 
+		calculate_factor();
 	}
 	/*
 	 * @Override public String toString() { return "Usine [id=" + id +
@@ -65,9 +72,9 @@ public class Usine {
 
 	@Override
 	public String toString() {
-		return "Usine [id=" + id + ", type=" + type + ", position= [" + position[0] +","+position[1] +"]"+ ", icones:" + icones.size()
+		return "Usine [id=" + id + ", type=" + type + ", position= [" + position[0] +","+position[1] +"]"+ ", inProd:" + inProduction
 				+ ", enter_product_type=" + enter_product_type + ", enter_products=" + enter_products
-				+ ", max_capacity=" + max_capacity + ", output_product=" + output_product_type
+				+ ", capacity=" + capacity + ", output_product=" + output_product_type
 				+ ", interval_production=" + interval_production + "]";
 	}
 
@@ -94,6 +101,16 @@ public class Usine {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+
+	public boolean isInProduction() {
+		return inProduction;
+	}
+
+
+	public void setInProduction(boolean inProduction) {
+		this.inProduction = inProduction;
 	}
 
 
@@ -152,14 +169,38 @@ public class Usine {
 	public void setEnter_products(ArrayList<Composant> enter_products) {
 		this.enter_products = enter_products;
 	}
+	
 
-	public int getMax_capacity() {
-		return max_capacity;
+	public int getCapacity() {
+		return capacity;
 	}
 
-	public void setMax_capacity(int max_capacity) {
-		this.max_capacity = max_capacity;
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
 	}
+
+
+
+	public double getStock() {
+		return stock;
+	}
+
+
+	public void setStock(double stock) {
+		this.stock = stock;
+	}
+
+
+	public int getOut_stock() {
+		return out_stock;
+	}
+
+
+	public void setOut_stock(int out_stock) {
+		this.out_stock = out_stock;
+	}
+
 
 	public int getInterval_production() {
 		return interval_production;
@@ -178,7 +219,6 @@ public class Usine {
 		else if(output_product_type.equals("aile") ) { return new Composant_aile(output_product_type);}
 		else if(output_product_type.equals("moteur") ) { return  new Composant_moteur(output_product_type);}
 		else if(output_product_type.equals("avion") ) { return  new Composant_avion(output_product_type);}
-		
 		return null;
 			}
 
@@ -192,5 +232,15 @@ public class Usine {
 		return enter_product_type.containsKey(test_product_type);
 	}
 	
+	public void calculate_factor() {
+		for(int i : enter_product_type.values()) {
+			capacity += i ; 
+		}
+		//inputs_Factor = 1 / inputs_Factor ;
+		//System.out.print("For the Usine =>: "+type + "with : "+enter_product_type);
+		//System.out.println(" input_factor =>: "+inputs_Factor);
+	}
+	
+
 }
 

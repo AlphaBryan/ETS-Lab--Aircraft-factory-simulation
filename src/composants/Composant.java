@@ -121,7 +121,7 @@ public class Composant {
 		return this.kill;
 	}
 
-	public int getIDFullStop(Noeud fullstop) {
+	public int getIDFullStop() {
 		return idfullStop;
 	}
 

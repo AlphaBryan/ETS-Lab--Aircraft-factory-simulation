@@ -40,8 +40,10 @@ public class Simulation {
 	
 	public static void run() {
 		updatePaths();
+		updateNodes();
 		running = true ; 
 		production_isOn = true ; 
+		System.out.println("==> "+Usines);
 		System.out.println("***Launch Simulation !");
 	}
 	
@@ -102,7 +104,11 @@ public class Simulation {
 	
 	public static void refreshQueue() {
 		for(int i = 0 ; i<production_queue.size() ; i++) {
-			if(production_queue.get(i).iskill()) {
+			Composant iComp = production_queue.get(i) ;
+			if(iComp.iskill()) {
+				int endId = iComp.getIDFullStop();
+				System.out.println("id full stop : "+endId);
+				Usines.get(endId).new_input(iComp.getType());
 				production_queue.remove(i);
 				System.out.println("We kill someone");
 			}	
@@ -123,5 +129,22 @@ public class Simulation {
 		}
 	}
 
+	public static void updateNodes() {
+		for(Noeud node : Usines.values()) {
+			if(node.getType().equals("usine-matiere")) {
+				node.setInProduction(true);
+			}
+		}
+	}
 	
+	public static void checkProductionState(int tour) {
+		for (Noeud usine : Usines.values()) {
+			if(usine.isInProduction()) {
+				if(usine.waitProduction()) {
+					Simulation.usine_build(usine.getId());
+				}
+			}
+		}
+	}
+
 }
