@@ -20,8 +20,7 @@ public class Usine {
 	protected HashMap<String, Integer> enter_product_type ; //hash importance, nom
 	private ArrayList<Composant> enter_products = new ArrayList<Composant>() ; 
 	protected int capacity = 0 ;
-	protected double stock = 0 ;
-	protected int out_stock = 0 ; //1 ; 2 ; 3  
+	protected HashMap<String, Integer> stock ;
 	private String output_product_type ; 
 	private int interval_production ;
 	
@@ -34,11 +33,13 @@ public class Usine {
 		this.position = usine.getPosition();
 		this.icones = usine.getIcones() ;
  		this.enter_product_type = usine.getEnter_product_type();
+		this.stock = usine.getStock() ; 
  		this.enter_products = usine.getEnter_products() ;
 		this.capacity = usine.getCapacity();
 		this.output_product_type = usine.getOutput_product_type();
 		this.interval_production = usine.getInterval_production();
 		calculate_factor();
+		init_stock();
 	}
 	
 	
@@ -48,9 +49,11 @@ public class Usine {
 		this.icones = new ArrayList<String>() ; 
 		this.position = new int[2] ; 
 		this.enter_product_type = new HashMap<String, Integer>() ; 
+		this.stock = new HashMap<String, Integer>() ; 
 		this.output_product_type = null ;
 		this.interval_production =  0 ; 
 		calculate_factor();
+		init_stock();
 	}
 	
 
@@ -60,15 +63,12 @@ public class Usine {
 		this.icones = icones ; 
 		this.position = position; 
 		this.enter_product_type = new HashMap<String, Integer>() ; 
+		this.stock = new HashMap<String, Integer>() ; 
 		this.output_product_type = null ;
 		this.interval_production =  0 ; 
 		calculate_factor();
+		init_stock();
 	}
-	/*
-	 * @Override public String toString() { return "Usine [id=" + id +
-	 * ", enter_product_type=" + enter_product_type + ", output_product=" +
-	 * output_product + ", interval_production=" + interval_production + "]"; }
-	 */
 
 	@Override
 	public String toString() {
@@ -77,7 +77,6 @@ public class Usine {
 				+ ", capacity=" + capacity + ", output_product=" + output_product_type
 				+ ", interval_production=" + interval_production + "]";
 	}
-
 
 	public int getId() {
 		return id;
@@ -101,6 +100,16 @@ public class Usine {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+
+	public HashMap<String, Integer> getStock() {
+		return stock;
+	}
+
+
+	public void setStock(HashMap<String, Integer> stock) {
+		this.stock = stock;
 	}
 
 
@@ -180,28 +189,6 @@ public class Usine {
 		this.capacity = capacity;
 	}
 
-
-
-	public double getStock() {
-		return stock;
-	}
-
-
-	public void setStock(double stock) {
-		this.stock = stock;
-	}
-
-
-	public int getOut_stock() {
-		return out_stock;
-	}
-
-
-	public void setOut_stock(int out_stock) {
-		this.out_stock = out_stock;
-	}
-
-
 	public int getInterval_production() {
 		return interval_production;
 	}
@@ -220,7 +207,7 @@ public class Usine {
 		else if(output_product_type.equals("moteur") ) { return  new Composant_moteur(output_product_type);}
 		else if(output_product_type.equals("avion") ) { return  new Composant_avion(output_product_type);}
 		return null;
-			}
+	}
 
 
 	public void setOutput_product_type(String output_type) {
@@ -236,9 +223,12 @@ public class Usine {
 		for(int i : enter_product_type.values()) {
 			capacity += i ; 
 		}
-		//inputs_Factor = 1 / inputs_Factor ;
-		//System.out.print("For the Usine =>: "+type + "with : "+enter_product_type);
-		//System.out.println(" input_factor =>: "+inputs_Factor);
+	}
+	
+	public void init_stock() {
+		for(String i : enter_product_type.keySet() ) {
+			stock.put(i,0); 
+		}
 	}
 	
 

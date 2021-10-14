@@ -15,7 +15,7 @@ public class Noeud extends Usine {
     private Image image ;
     private int image_state =-1 ; 
     
-    private int startTime = 0 ;
+    private double startTime = 0 ;
     
     private double b = 5 /2 ; 
 
@@ -58,38 +58,38 @@ public class Noeud extends Usine {
 	
 
 	public void new_input(String type) {
-		int percent = this.enter_product_type.get(type) ; 
-		this.stock += percent / capacity ; ;
+		if( this.enter_product_type.get(type) > this.stock.get(type) ) {
+			this.stock.put(type, stock.get(type)+1);
+		}
 		checkStock();
 	}
 	
 	public void checkStock() {
-		if (stock > (1)*capacity  ) {
+		if ( stock.equals(enter_product_type)   ) {
 			inProduction = true ; 
+			System.out.println(" •The Stock Usine "+getType()+" is Full");
 		}
 	}
 	
 	public boolean waitProduction() {
-		startTime ++ ;
-		double a = startTime ; 
-		double b = getInterval_production() ; 
-		double ratio = a /b ;
-		//System.out.println("ratio =>"+ratio);
-		if (ratio < 0.3) {
+		startTime +=1 ; 
+		double ratio = startTime / Double.valueOf( getInterval_production() ) ;
+		if (ratio < 0.33) {
 			update_Image(0);
-			System.out.println("yo");
 		}
 		else if (0.33 <= ratio && ratio < 0.66) {
 			update_Image(1);
-			System.out.println("xx");
 		}
 		else if (0.66 <= ratio && ratio < (1)  ) {
 			update_Image(2);
 		}
-		else if (ratio > (1) ) {
+		else if (ratio >= (1) ) {
 			update_Image(3);
 			startTime = 0 ; 
-			return true ;
+			if(getOutput_product_type() != null) {
+				System.out.println("  • The Usine "+getType()+" produce a " + getOutput_product_type());
+				return true ;
+			}
 		}
 		return false;
 	}

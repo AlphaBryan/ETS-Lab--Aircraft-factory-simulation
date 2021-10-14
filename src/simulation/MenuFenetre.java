@@ -55,7 +55,6 @@ public class MenuFenetre extends JMenuBar {
 
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				File selectedFile = fileChooser.getSelectedFile();
-				System.out.println("=>"+selectedFile.getAbsolutePath());
 				// Done - Parser le fichier XML sélectionné
 				String filePath = selectedFile.getAbsolutePath() ;
 				Xml_File myXML;
@@ -64,9 +63,8 @@ public class MenuFenetre extends JMenuBar {
 					ArrayList<Usine> all_usine = myXML.read_metadonnees();
 					Simulation.Usines = myXML.read_simulation_usine(all_usine);
 				    Simulation.Chemins = myXML.read_simulation_chemin(Simulation.Usines);
-				    System.out.println("***Ficher XML chargé sans erreur. ");
-
-
+				    Simulation.FILE_CHARGED = true ; 
+				    System.out.println("• Ficher ressource : OK ");
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

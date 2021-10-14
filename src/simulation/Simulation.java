@@ -20,8 +20,8 @@ public class Simulation {
 	 */
 	public static Map<Integer, Noeud> Usines ; 
 	public static ArrayList<Chemin> Chemins ;
+	public static boolean FILE_CHARGED = false ; 
 	
-	// # Map<id Origin, Map< nameType, id Fin >> Du point de vue l'élément
 	private static Map<Integer, Map<String, Integer>> simulationMap = new HashMap<Integer, Map<String, Integer>>(); 
 
 	public static ArrayList<Composant> production_queue = new ArrayList<Composant>() ; 
@@ -31,11 +31,15 @@ public class Simulation {
 
 	
 	public static void main(String[] args) {
+		System.out.println( "# Laboratoire 1 : LOG121 - Simulation " );
+		System.out.println( "# Author : Bryan MEVO \n" );
+		
 		Environnement environnement = new Environnement();
 		FenetrePrincipale fenetre = new FenetrePrincipale();
-
 		environnement.addPropertyChangeListener(fenetre);
+		
 		environnement.execute();
+		System.out.println("• Lancement Programme : OK");
 	}
 	
 	public static void run() {
@@ -43,8 +47,7 @@ public class Simulation {
 		updateNodes();
 		running = true ; 
 		production_isOn = true ; 
-		System.out.println("==> "+Usines);
-		System.out.println("***Launch Simulation !");
+		System.out.println("• Lancement Simulation : OK");
 	}
 	
 	public static void stop() {
@@ -81,25 +84,13 @@ public class Simulation {
 	
 	public static void usine_build(int enter) {
 		Noeud start = Usines.get(enter) ;
-		System.out.println("creation from: "+start.getType());
-//		Noeud end = Usines.get(exit) ; 
-//		Chemin chemin ;
-//		for(Chemin iChemin : Simulation.Chemins) {
-//			if (iChemin.checkNodes(enter, exit)) {
-//				chemin = iChemin ;
-//			}
-//		}		
 		Composant element = start.build_product() ;
-		//Composant element = new Composant_metal("metal") ;
 		element.setPosition(new Point(start.getX(),start.getY()));
-		
 		int idEnd = simulationMap.get(start.getId()).get(element.getType());
 		Noeud end = Usines.get(idEnd);
 		element.setFullStop(end);
 		element.updateSpeed();
-
 		addQueue(element);
-
 	}
 	
 	public static void refreshQueue() {
@@ -107,10 +98,8 @@ public class Simulation {
 			Composant iComp = production_queue.get(i) ;
 			if(iComp.iskill()) {
 				int endId = iComp.getIDFullStop();
-				System.out.println("id full stop : "+endId);
 				Usines.get(endId).new_input(iComp.getType());
 				production_queue.remove(i);
-				System.out.println("We kill someone");
 			}	
 		}
 	}

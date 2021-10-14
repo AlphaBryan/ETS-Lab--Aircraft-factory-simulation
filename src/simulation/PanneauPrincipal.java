@@ -35,7 +35,7 @@ public class PanneauPrincipal extends JPanel {
 	}
 
 	public void paint_Nodes(Graphics g) {
-		if (Simulation.Usines != null) {
+		if (Simulation.FILE_CHARGED) {
 			for (Noeud node : Simulation.Usines.values()) {
 				g.drawImage(node.getImage(), node.getX(), node.getY(), null);
 			}
@@ -43,7 +43,7 @@ public class PanneauPrincipal extends JPanel {
 	}
 
 	public void paint_Paths(Graphics g) {
-		if (Simulation.Chemins != null) {
+		if (Simulation.FILE_CHARGED) {
 			for (Chemin chemin : Simulation.Chemins) {
 				Noeud from = Simulation.Usines.get(chemin.getOrigin());
 				Noeud to = Simulation.Usines.get(chemin.getEnd());

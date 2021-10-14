@@ -169,7 +169,7 @@ public class Composant {
 			y = -1;
 		}
 
-		int test_factor = 5;
+		int test_factor = 10;
 		x *= test_factor;
 		y *= test_factor;
 		vitesse = new Point(x, y);
