@@ -19,6 +19,9 @@ public class Noeud extends Usine {
     
     private double b = 5 /2 ; 
 
+	private String state = "EMPTY" ;
+	
+
 	public Noeud(String type) {
 		super(type);
 		update_Image(0);
@@ -42,7 +45,17 @@ public class Noeud extends Usine {
 	public void setImage(Image image) {
 		this.image = image;
 	}
+	
+	
 		
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	public void update_Image(int state) {
 		if( state != image_state ) {
 			image_state = state ; 
@@ -55,25 +68,11 @@ public class Noeud extends Usine {
 		}
 		
 	}
-	
 
-	public void new_input(String type) {
-		if( this.enter_product_type.get(type) > this.stock.get(type) ) {
-			this.stock.put(type, stock.get(type)+1);
-		}
-		checkStock();
-	}
-	
-	public void checkStock() {
-		if ( stock.equals(enter_product_type)   ) {
-			inProduction = true ; 
-			System.out.println(" •The Stock Usine "+getType()+" is Full");
-		}
-	}
 	
 	public boolean waitProduction() {
 		startTime +=1 ; 
-		double ratio = startTime / Double.valueOf( getInterval_production() ) ;
+		double ratio = startTime / Double.valueOf( getRealInterval_production() ) ;
 		if (ratio < 0.33) {
 			update_Image(0);
 		}
@@ -94,8 +93,27 @@ public class Noeud extends Usine {
 		return false;
 	}
 	
-    
-    
+	public String waitSubProduction() {
+		double ratio = calculate_inStock() / Double.valueOf( getCapacity() ) ;
+		if (ratio < 0.33) {
+			update_Image(0);
+			return "EMPTY"; 
+		}
+		else if (0.33 <= ratio && ratio < 0.66) {
+			update_Image(1);
+			return "NORMAL"; 
+		}
+		else if (0.66 <= ratio && ratio < (1)  ) {
+			update_Image(2);
+			return "ALMOST_FULL";
+		}
+		else if (ratio >= (1) ) {
+			update_Image(3);
+			return "FULL";
+		}
+		return "";
+	}
+	
 		
 
 }

@@ -1,14 +1,10 @@
 package simulation;
 
-import java.util.Queue;
-
 import javax.swing.SwingWorker;
-
-import composants.Composant;
 
 public class Environnement extends SwingWorker<Object, String> {
 	private boolean actif = true;
-	private static final int DELAI = 100;
+	private static final int DELAI = 20;
 	private static int tour = 0;
 
 	@Override
@@ -17,18 +13,12 @@ public class Environnement extends SwingWorker<Object, String> {
 			Thread.sleep(DELAI);
 			if(Simulation.isRunning()) {
 				tour++;
-				System.out.println("- tour: "+tour);
 				Simulation.refreshQueue(); 
-				if (Simulation.production_isOn()) {
-					
-					Simulation.checkProductionState(tour); ///observer  ?
-					
-				}
-								
+				Simulation.notifyTOUR(tour); 
 			}		
 			firePropertyChange("Background", null, null);			
 		}
-		return null;
+		return null;			
 	}
 
 }

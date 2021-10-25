@@ -11,6 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
 
+import vente_strategy.Vente_Aleatoire;
+import vente_strategy.Vente_Fixe;
+
 public class PanneauStrategie extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -25,8 +28,22 @@ public class PanneauStrategie extends JPanel {
 
 		boutonConfirmer.addActionListener((ActionEvent e) -> {
 			// TODO - Appeler la bonne stratégie ***********************
-			System.out.println("• Sélection "+getSelectedButtonText(groupeBoutons)+" : OK");
-		    Simulation.run(); // Attention ça se lance même si strate est nulle 
+			String str_strategy = getSelectedButtonText(groupeBoutons) ; 
+		    if (str_strategy.equals("Stratégie 1")) {
+		    	Simulation.setStrategy(new Vente_Fixe() );
+		    }
+		    else if (str_strategy.equals("Stratégie 2")) {
+		    	System.out.println("Je veux le 2");
+		    	Simulation.setStrategy(new Vente_Aleatoire() );
+		    }
+			System.out.println("• Sélection "+str_strategy+ " ["+ Simulation.getStrategy().toString() + "]"+ " : OK");
+
+		    if(Simulation.Chemins == null || Simulation.Usines == null) {
+		    	System.out.println(" • Erreur : Ficher Configuration non chargé");
+		    }
+		    else {
+				Simulation.run(); 
+		    }
 			// Fermer la fenêtre du composant
 			SwingUtilities.getWindowAncestor((Component) e.getSource()).dispose();
 		});

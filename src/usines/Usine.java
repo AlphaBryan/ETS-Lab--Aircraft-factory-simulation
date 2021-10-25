@@ -1,30 +1,33 @@
 package usines;
 
 import java.awt.Point;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.security.spec.ECPoint;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import composants.Composant;
 import composants.Composant_aile;
 import composants.Composant_avion;
 import composants.Composant_metal;
 import composants.Composant_moteur;
 
-public class Usine {
+public class Usine    {
 
-	private int id ;
-	private String type ; 
-	private int[] position ; 	
-	private ArrayList<String> icones  ; //check sur les autres ²
+	protected int id ;
+	protected String type ; 
+	protected int[] position ; 	
+	protected ArrayList<String> icones  ; //check sur les autres ²
 	protected HashMap<String, Integer> enter_product_type ; //hash importance, nom
-	private ArrayList<Composant> enter_products = new ArrayList<Composant>() ; 
+	protected ArrayList<Composant> enter_products = new ArrayList<Composant>() ; 
 	protected int capacity = 0 ;
 	protected HashMap<String, Integer> stock ;
-	private String output_product_type ; 
-	private int interval_production ;
-	
+	protected String output_product_type ; 
+	protected int interval_production ;
 	protected boolean inProduction = false ;
+	
+	protected double real_interval ; 
+	protected boolean stop = false ; 
 
 	public Usine(Usine usine) {
 		super();
@@ -38,10 +41,10 @@ public class Usine {
 		this.capacity = usine.getCapacity();
 		this.output_product_type = usine.getOutput_product_type();
 		this.interval_production = usine.getInterval_production();
+		real_interval = this.interval_production ; 
 		calculate_factor();
 		init_stock();
 	}
-	
 	
 	public Usine(String type) {
 		this.id = -1 ;
@@ -52,11 +55,11 @@ public class Usine {
 		this.stock = new HashMap<String, Integer>() ; 
 		this.output_product_type = null ;
 		this.interval_production =  0 ; 
+		real_interval = this.interval_production ; 
 		calculate_factor();
 		init_stock();
 	}
 	
-
 	public Usine(String type , int[] position,ArrayList<String> icones) {
 		this.id = -1 ;
 		this.type = type ; 
@@ -66,6 +69,7 @@ public class Usine {
 		this.stock = new HashMap<String, Integer>() ; 
 		this.output_product_type = null ;
 		this.interval_production =  0 ; 
+		real_interval = this.interval_production ; 
 		calculate_factor();
 		init_stock();
 	}
@@ -128,7 +132,10 @@ public class Usine {
 	}
 	
 	public String getTheIcone(int i) {
-		return icones.get(i);
+		if (!icones.isEmpty()) {
+			return icones.get(i);
+		}
+		return "";
 	}
 
 	public int[] getPosition() {
@@ -179,11 +186,9 @@ public class Usine {
 		this.enter_products = enter_products;
 	}
 	
-
 	public int getCapacity() {
 		return capacity;
 	}
-
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
@@ -192,14 +197,22 @@ public class Usine {
 	public int getInterval_production() {
 		return interval_production;
 	}
+	public double getRealInterval_production() {
+		return real_interval;
+	}
 
 	public void setInterval_production(int interval_production) {
 		this.interval_production = interval_production;
 	}
 	
+	public void setRealInterval_production(int real_interval) {
+		this.real_interval = real_interval;
+	}
+	
 	public String getOutput_product_type() {
 		return output_product_type;
 	}
+	
 	
 	public Composant build_product() {		
 		if(output_product_type.equals("metal") ) { return new Composant_metal(output_product_type);}
@@ -209,12 +222,10 @@ public class Usine {
 		return null;
 	}
 
-
 	public void setOutput_product_type(String output_type) {
 		this.output_product_type = output_type ; 
 	}
 	
-
 	public boolean accept(String test_product_type) {
 		return enter_product_type.containsKey(test_product_type);
 	}
@@ -225,9 +236,57 @@ public class Usine {
 		}
 	}
 	
+	public double calculate_inStock() {
+		double som = 0 ; 
+		for(int i : stock.values()) {
+			som += i ; 
+		}
+		return som;
+	}
+	
 	public void init_stock() {
 		for(String i : enter_product_type.keySet() ) {
 			stock.put(i,0); 
+		}
+	}
+
+	public void new_input(String type) {
+		if( this.enter_product_type.get(type) > this.stock.get(type) ) {
+			this.stock.put(type, stock.get(type)+1);
+		}
+		checkStock();
+	}
+	
+	public void output(String type , int nb) {
+		int rest = stock.get(type) - nb ; 
+		if (rest>=0) {
+			stock.put(type, rest ) ; 
+		}
+		
+	}
+	
+	public void checkStock() {
+		if ( stock.equals(enter_product_type)   ) {
+			inProduction = true ; 
+			//System.out.println(" •The Stock Usine "+getType()+" is Full");
+		}
+	}
+	
+	
+	public void update(String state) {
+
+		if( state.equals("EMPTY")) { // #0/0
+			real_interval = interval_production*1 ;
+		}
+		else if( state.equals("NORMAL")) { // #1/3
+			real_interval = interval_production*2 ;
+		}
+		else if( state.equals("ALMOST_FULL")) { // #2/3
+			real_interval = interval_production*4 ;
+		}	 
+		else if (state.equals("FULL")) { // #3/3
+			real_interval = Double.POSITIVE_INFINITY ;
+
 		}
 	}
 	

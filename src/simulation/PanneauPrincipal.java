@@ -58,6 +58,9 @@ public class PanneauPrincipal extends JPanel {
 				element.move();
 				g.drawImage(element.getIcone(), element.getX(), element.getY(), null);
 			} else {
+				if(element.getType().equals("avion")) {
+					Simulation.plane_in_queue --;
+				}
 				element.kill();
 			}
 		}

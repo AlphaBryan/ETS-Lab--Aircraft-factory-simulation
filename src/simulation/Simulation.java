@@ -12,22 +12,27 @@ import composants.Composant_metal;
 import resaux.Chemin;
 import resaux.Noeud;
 import usines.Usine;
+import usines.Usine_entrepot;
+import vente_strategy.Vente_Strategy;
 
 public class Simulation {
-
 	/**
 	 * Cette classe représente l'application dans son ensemble.
 	 */
 	public static Map<Integer, Noeud> Usines ; 
 	public static ArrayList<Chemin> Chemins ;
 	public static boolean FILE_CHARGED = false ; 
+	private static Usine_entrepot OBS_Subject ; 
 	
 	private static Map<Integer, Map<String, Integer>> simulationMap = new HashMap<Integer, Map<String, Integer>>(); 
 
 	public static ArrayList<Composant> production_queue = new ArrayList<Composant>() ; 
-
+	public static int plane_in_queue = 0 ; 
+	
 	private static boolean running = false ;
 	private static boolean production_isOn = false;
+	private static Vente_Strategy strategy ; 
+	private static int sells ; 
 
 	
 	public static void main(String[] args) {
@@ -45,6 +50,8 @@ public class Simulation {
 	public static void run() {
 		updatePaths();
 		updateNodes();
+		setSubject();
+		attachListerToSubject();
 		running = true ; 
 		production_isOn = true ; 
 		System.out.println("• Lancement Simulation : OK");
@@ -64,6 +71,16 @@ public class Simulation {
 
 	public static boolean isRunning() {
 		return running ; 
+	}
+
+	
+	public static Vente_Strategy getStrategy() {
+		return strategy;
+	}
+
+	public static void setStrategy(Vente_Strategy strategy) {
+		Simulation.strategy = strategy;
+		System.out.println("set strat =>"+strategy.toString());
 	}
 
 	public static void addQueue(Composant element) {
@@ -91,6 +108,9 @@ public class Simulation {
 		element.setFullStop(end);
 		element.updateSpeed();
 		addQueue(element);
+		if(element.getType().equals("avion")) {
+			plane_in_queue ++ ; 
+		}
 	}
 	
 	public static void refreshQueue() {
@@ -100,6 +120,7 @@ public class Simulation {
 				int endId = iComp.getIDFullStop();
 				Usines.get(endId).new_input(iComp.getType());
 				production_queue.remove(i);
+
 			}	
 		}
 	}
@@ -126,14 +147,62 @@ public class Simulation {
 		}
 	}
 	
-	public static void checkProductionState(int tour) {
+	public static void notifyTOUR(int tour) {
+		printConsole(tour);
 		for (Noeud usine : Usines.values()) {
+			if (usine.getId() == OBS_Subject.getId()) {
+				OBS_Subject.setState( usine.waitSubProduction() );
+				sendSubjectNotifiction();
+				verify_sellStrategy();
+			}
 			if(usine.isInProduction()) {
-				if(usine.waitProduction()) {
-					Simulation.usine_build(usine.getId());
+				if (usine.getId() != OBS_Subject.getId()) {
+					if(usine.waitProduction() == true) {
+						Simulation.usine_build(usine.getId());
+					}
 				}
 			}
 		}
 	}
 
+	public static void setSubject() {
+		for(Noeud node : Usines.values()) {
+			if(node.getType().equals("entrepot")) {
+				OBS_Subject = new Usine_entrepot( node ) ;
+			}
+		}
+	}
+
+	public static void attachListerToSubject() {
+		for (Noeud usine : Usines.values()) {
+			if( usine.getId() != OBS_Subject.getId() ) {
+				OBS_Subject.attach(usine.getId());
+			}
+		}		
+	}
+	
+	public static void sendSubjectNotifiction() {
+		Usines = OBS_Subject.notifyObservers(Usines);		
+	}
+	
+	public static void verify_sellStrategy() {
+		if( strategy.verifyVente(Usines.get(OBS_Subject.getId()), plane_in_queue)) {
+			Usines.get(OBS_Subject.getId()).output(strategy.getObjectToSell(), strategy.getNumber_toSell());
+			//OBS_Subject.vente();
+			setSubject();
+			sells++;
+
+		}
+
+
+	}
+	
+	public static void printConsole(int tour) {
+		System.out.println("\n - tour: "+tour);
+		System.out.println("  • Stratégie utilisée: " + strategy.toString() );
+		System.out.println("  • Stock Avion: "+ (int)OBS_Subject.calculate_inStock() + "/" + OBS_Subject.getCapacity());
+		System.out.println("  • Vitesse de Production: "+ OBS_Subject.getSpeed() );
+		System.out.println("  • Nombre de ventes: " + sells + " vente(s)" );
+	}
+	
 }
